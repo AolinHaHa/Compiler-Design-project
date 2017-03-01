@@ -1,0 +1,32 @@
+max(a:int, b:int) : int
+{
+  if (a >= b) then return a else return b
+}
+
+array_max(A:arrayof 10 int) : int
+{
+  pos:int
+  max:int
+  pos := 1
+  max := A[0]
+  while (pos < 10) do {
+    if (A[pos] > max)
+      then max := A[pos]
+      else skip
+    pos := pos + 1
+  }
+}
+
+main() : int
+{
+  i:int
+  j:int
+  i := 1
+  j := 100
+  while (i < 10) do {
+    print max(i * 20, j) + 1000
+    i := i + 1
+    j := j + 5
+  }
+  return 0
+}

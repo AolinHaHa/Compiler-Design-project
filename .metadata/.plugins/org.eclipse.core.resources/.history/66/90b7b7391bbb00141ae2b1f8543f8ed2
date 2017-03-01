@@ -1,0 +1,5 @@
+package malgol.ast;
+
+public class FunctionDefinition {
+
+}

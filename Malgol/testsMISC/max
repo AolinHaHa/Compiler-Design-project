@@ -1,0 +1,10 @@
+max(a:int, b:int) : int
+{
+  if (a >= b) then return a else return b
+}
+
+main() : int
+{
+  print max(3, 10)
+  return 0
+}

@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Feb 15, 2014 9:52:54 AM                                                        
+
+     project    
+     description
+                   
+     WMarrero                                                                
+     ====================================================================== -->
+<project name="Project" default="build">
+	<description>
+            Project - Malgol Language Compiler
+    </description>
+
+	<property environment="env" />
+
+	<target name="build" depends="clean-all,build-parser">
+		<javac srcdir="parser:src" destdir="bin" debug="true" deprecation="on" classpath="lib/sablecc.jar" includeantruntime="false">
+			<!-- <compilerarg value="-Xlint:unchecked"/> -->
+		</javac>
+		<copy file="parser/malgol/lexer/lexer.dat" todir="bin/malgol/lexer" overwrite="true" />
+		<copy file="parser/malgol/parser/parser.dat" todir="bin/malgol/parser" overwrite="true" />
+		<tstamp>
+			<format property="date.time" pattern="yyyy-MM-dd-HH-mm-ss" />
+		</tstamp>
+		<echo append="true" file="log.txt">
+		      Compiled by ${user.name} on ${date.time}
+		</echo>
+	</target>
+
+	<target name="build-parser" depends="clean-parser">
+		<java jar="lib/sablecc.jar" dir="parser" fork="true">
+			<arg file="parser/parser.sable" />
+		</java>
+	</target>
+
+
+	<target name="clean-parser">
+		<delete dir="parser/malgol" />
+	</target>
+
+	<target name="clean-tests">
+		<delete>
+			<fileset dir="tests" includes="test*.txt" />
+			<fileset dir="tests" includes="test*.s" />
+			<fileset dir="tests" includes="test*.c" />
+			<fileset dir="tests" includes="test*.exe" />
+			<fileset dir="tests" includes="test*.err" />
+		</delete>
+		<delete file="tests/AllTests.txt" />
+	</target>
+
+	<target name="clean-all" depends="clean-tests">
+		<delete dir="parser/malgol" />
+		<delete dir="bin" />
+		<mkdir dir="bin" />
+		<delete>
+			<fileset dir="." includes="submit-*.zip" />
+			<fileset dir="." includes="output-*" />
+			<fileset defaultexcludes="no" dir="." includes="**/*~" />
+			<fileset dir="." includes="**/large.*" />
+		</delete>
+	</target>
+
+
+	<target name="set-suffix">
+		<fail unless="stage">
+ERROR
+  
+You must set the value of stage!
+usage:  ant -Dstage=# target
+		</fail>
+		<condition property="suffix" value="s" else="c">
+			<equals arg1="${stage}" arg2="5" />
+		</condition>
+	</target>
+
+	<target name="test1" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="1" />
+		</antcall>
+	</target>
+
+	<target name="test2" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="2" />
+		</antcall>
+	</target>
+
+	<target name="test3" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="3" />
+		</antcall>
+	</target>
+
+	<target name="test4" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="4" />
+		</antcall>
+	</target>
+
+	<target name="test5" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="5" />
+		</antcall>
+	</target>
+
+	<target name="test6" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="6" />
+		</antcall>
+	</target>
+
+	<target name="test7" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="7" />
+		</antcall>
+	</target>
+
+	<target name="test8" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="8" />
+		</antcall>
+	</target>
+
+	<target name="test9" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="9" />
+		</antcall>
+	</target>
+
+	<target name="test10" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="10" />
+		</antcall>
+	</target>
+
+	<target name="test11" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="11" />
+		</antcall>
+	</target>
+
+	<target name="test12" depends="set-suffix">
+		<antcall target="-correct">
+			<param name="test" value="12" />
+		</antcall>
+	</target>
+
+	<target name="testA" depends="set-suffix">
+		<antcall target="-buggy">
+			<param name="test" value="A" />
+		</antcall>
+	</target>
+
+	<target name="testB" depends="set-suffix">
+		<antcall target="-buggy">
+			<param name="test" value="B" />
+		</antcall>
+	</target>
+
+	<target name="testC" depends="set-suffix">
+		<antcall target="-buggy">
+			<param name="test" value="C" />
+		</antcall>
+	</target>
+
+	<target name="testD" depends="set-suffix">
+		<antcall target="-buggy">
+			<param name="test" value="D" />
+		</antcall>
+	</target>
+
+	<target name="testE" depends="set-suffix">
+		<antcall target="-buggy">
+			<param name="test" value="E" />
+		</antcall>
+	</target>
+
+	<target name="testF" depends="set-suffix">
+		<antcall target="-buggy">
+			<param name="test" value="F" />
+		</antcall>
+	</target>
+
+	<target name="testG" depends="set-suffix">
+		<antcall target="-buggy">
+			<param name="test" value="G" />
+		</antcall>
+	</target>
+
+	<target name="testH" depends="set-suffix">
+		<antcall target="-buggy">
+			<param name="test" value="H" />
+		</antcall>
+	</target>
+
+	<target name="test-all" depends="set-suffix, clean-tests">
+		<parallel>
+			<antcall target="test1" />
+			<antcall target="test2" />
+			<antcall target="test3" />
+			<antcall target="test4" />
+			<antcall target="test5" />
+			<antcall target="test6" />
+			<antcall target="test7" />
+			<antcall target="test8" />
+			<antcall target="test9" />
+			<antcall target="test10" />
+			<antcall target="test11" />
+			<antcall target="test12" />
+			<antcall target="testA" />
+			<antcall target="testB" />
+			<antcall target="testC" />
+			<antcall target="testD" />
+			<antcall target="testE" />
+			<antcall target="testF" />
+			<antcall target="testG" />
+			<antcall target="testH" />
+			<sequential>
+				<waitfor maxwait="20" maxwaitunit="second">
+					<and>
+						<available file="test1.txt" />
+						<available file="test2.txt" />
+						<available file="test3.txt" />
+						<available file="test4.txt" />
+						<available file="test5.txt" />
+						<available file="test6.txt" />
+						<available file="test7.txt" />
+						<available file="test8.txt" />
+						<available file="test9.txt" />
+						<available file="test10.txt" />
+						<available file="test11.txt" />
+						<available file="test12.txt" />
+						<available file="testA.err" />
+						<available file="testA.err" />
+						<available file="testB.err" />
+						<available file="testC.err" />
+						<available file="testD.err" />
+						<available file="testE.err" />
+						<available file="testF.err" />
+						<available file="testG.err" />
+						<available file="testH.err" />
+					</and>
+				</waitfor>
+				<antcall target="-concat">
+					<param name="test" value="1" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="2" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="3" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="4" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="5" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="6" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="7" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="8" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="9" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="10" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="11" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="12" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="A" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="B" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="C" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="D" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="E" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="F" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="G" />
+				</antcall>
+				<antcall target="-concat">
+					<param name="test" value="H" />
+				</antcall>
+			</sequential>
+		</parallel>
+		
+	</target>
+
+	<target name="-concat">
+		<concat destfile="tests\testOutput.txt" append="true" eol="dos">${line.separator}TEST ${test}${line.separator}</concat>
+		<concat destfile="tests\testOutput.txt" append="true" eol="dos">
+			<fileset file="tests\test${test}.txt" />
+		</concat>
+		<concat destfile="tests\testError.txt" append="true" eol="dos">${line.separator}TEST ${test}${line.separator}</concat>
+		<concat destfile="tests\testError.txt" append="true" eol="dos">
+			<fileset file="tests\test${test}.err" />
+		</concat>
+	</target>
+
+	<target name="-correct" depends="set-suffix">
+		<java classname="malgol.Main" dir="bin" error="tests\test${test}.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test${test}" />
+			<arg file="tests\test${test}.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test${test}.exe" />
+			<arg file="tests\test${test}.${suffix}" />
+		</exec>
+		<exec executable="tests\test${test}.exe" output="tests\test${test}.txt" failifexecutionfails="false" />
+	</target>
+
+	<target name="-buggy" depends="set-suffix">
+		<java classname="malgol.Main" dir="bin" error="tests\test${test}.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test${test}" />
+			<arg file="tests\test${test}.${suffix}" />
+		</java>
+	</target>
+
+
+	<target name="submit" depends="set-suffix,clean-all,build,test-all">
+		<tstamp>
+			<format property="date.time" pattern="yyyy-MM-dd-HH-mm-ss" />
+		</tstamp>
+		<echo append="true" file="log.txt">
+	      Submission created by ${user.name} on ${date.time}
+	    </echo>
+		<zip zipfile="submit-${date.time}.zip" basedir=".." includes="**/Malgol/**,**/.metadata/**" excludes="bin/**/*,bin,submit-*.zip" />
+		<echo>${msg}</echo>
+	</target>
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+	<target name="test1">
+		<antcall target="-correct">
+			<param name="test" value="1" />
+			<param name="stage" value="5" />
+		</antcall>
+	</target>
+
+	<target name="test2">
+		<java classname="malgol.Main" dir="bin" error="tests\test2.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test2" />
+			<arg file="tests\test2.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test2.exe" />
+			<arg file="tests\test2.${suffix}" />
+		</exec>
+		<exec executable="tests\test2.exe" output="tests\test2.txt">
+		</exec>
+	</target>
+
+	<target name="test3">
+		<java classname="malgol.Main" dir="bin" error="tests\test3.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test3" />
+			<arg file="tests\test3.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test3.exe" />
+			<arg file="tests\test3.${suffix}" />
+		</exec>
+		<exec executable="tests\test3.exe" output="tests\test3.txt">
+		</exec>
+	</target>
+
+	<target name="test4">
+		<java classname="malgol.Main" dir="bin" error="tests\test4.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test4" />
+			<arg file="tests\test4.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test4.exe" />
+			<arg file="tests\test4.${suffix}" />
+		</exec>
+		<exec executable="tests\test4.exe" output="tests\test4.txt">
+		</exec>
+	</target>
+
+	<target name="test5">
+		<java classname="malgol.Main" dir="bin" error="tests\test5.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test5" />
+			<arg file="tests\test5.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test5.exe" />
+			<arg file="tests\test5.${suffix}" />
+		</exec>
+		<exec executable="tests\test5.exe" output="tests\test5.txt">
+		</exec>
+	</target>
+
+	<target name="test6">
+		<java classname="malgol.Main" dir="bin" error="tests\test6.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test6" />
+			<arg file="tests\test6.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test6.exe" />
+			<arg file="tests\test6.${suffix}" />
+		</exec>
+		<exec executable="tests\test6.exe" output="tests\test6.txt">
+		</exec>
+	</target>
+
+	<target name="test7">
+		<java classname="malgol.Main" dir="bin" error="tests\test7.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test7" />
+			<arg file="tests\test7.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test7.exe" />
+			<arg file="tests\test7.${suffix}" />
+		</exec>
+		<exec executable="tests\test7.exe" output="tests\test7.txt">
+		</exec>
+	</target>
+
+	<target name="test8">
+		<java classname="malgol.Main" dir="bin" error="tests\test8.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test8" />
+			<arg file="tests\test8.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test8.exe" />
+			<arg file="tests\test8.${suffix}" />
+		</exec>
+		<exec executable="tests\test8.exe" output="tests\test8.txt">
+		</exec>
+	</target>
+
+	<target name="test9">
+		<java classname="malgol.Main" dir="bin" error="tests\test9.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test9" />
+			<arg file="tests\test9.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test9.exe" />
+			<arg file="tests\test9.${suffix}" />
+		</exec>
+		<exec executable="tests\test9.exe" output="tests\test9.txt">
+		</exec>
+	</target>
+
+	<target name="test10">
+		<java classname="malgol.Main" dir="bin" error="tests\test10.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test10" />
+			<arg file="tests\test10.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test10.exe" />
+			<arg file="tests\test10.${suffix}" />
+		</exec>
+		<exec executable="tests\test10.exe" output="tests\test10.txt">
+		</exec>
+	</target>
+
+	<target name="test11">
+		<java classname="malgol.Main" dir="bin" error="tests\test11.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test11" />
+			<arg file="tests\test11.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test11.exe" />
+			<arg file="tests\test11.${suffix}" />
+		</exec>
+		<exec executable="tests\test11.exe" output="tests\test11.txt">
+		</exec>
+	</target>
+
+	<target name="test12">
+		<java classname="malgol.Main" dir="bin" error="tests\test12.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\test12" />
+			<arg file="tests\test12.${suffix}" />
+		</java>
+		<exec executable="gcc">
+			<arg value="-o" />
+			<arg file="tests\test12.exe" />
+			<arg file="tests\test12.${suffix}" />
+		</exec>
+		<exec executable="tests\test12.exe" output="tests\test12.txt">
+		</exec>
+	</target>
+
+	<target name="testA">
+		<java classname="malgol.Main" dir="bin" error="tests\testA.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\testA" />
+			<arg file="tests\testA.${suffix}" />
+		</java>
+	</target>
+
+	<target name="testB">
+		<java classname="malgol.Main" dir="bin" error="tests\testB.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\testB" />
+			<arg file="tests\testB.${suffix}" />
+		</java>
+	</target>
+
+	<target name="testC">
+		<java classname="malgol.Main" dir="bin" error="tests\testC.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\testC" />
+			<arg file="tests\testC.${suffix}" />
+		</java>
+	</target>
+
+	<target name="testD">
+		<java classname="malgol.Main" dir="bin" error="tests\testD.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\testD" />
+			<arg file="tests\testD.${suffix}" />
+		</java>
+	</target>
+
+	<target name="testE">
+		<java classname="malgol.Main" dir="bin" error="tests\testE.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\testE" />
+			<arg file="tests\testE.${suffix}" />
+		</java>
+	</target>
+
+	<target name="testF">
+		<java classname="malgol.Main" dir="bin" error="tests\testF.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\testF" />
+			<arg file="tests\testF.${suffix}" />
+		</java>
+	</target>
+
+	<target name="testG">
+		<java classname="malgol.Main" dir="bin" error="tests\testG.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\testG" />
+			<arg file="tests\testG.${suffix}" />
+		</java>
+	</target>
+
+	<target name="testH">
+		<java classname="malgol.Main" dir="bin" error="tests\testH.err" fork="true">
+			<arg value="${stage}" />
+			<arg file="tests\testH" />
+			<arg file="tests\testH.${suffix}" />
+		</java>
+	</target>
+	-->
+
+	<!--
+	<target name="test" depends="clean-tests">
+		<for param="file">
+			<path>
+				<fileset dir="tests" includes="test*" />
+			</path>
+			<sequential>
+				<java classname="malgol.Main" dir="bin" error="tests\@{file}.err" fork="true">
+					<arg value="${stage}" />
+					<arg file="@{file}" />
+					<arg file="tests\@{file}.s" />
+				</java>
+				<exec executable="gcc">
+					<arg value="-o" />
+					<arg file="tests\@{file}.exe" />
+					<arg file="tests\test1.s" />
+				</exec>
+				<exec executable="tests\@{file}.exe" output="tests\@{file}.txt">
+				</exec>
+			</sequential>
+		</for>
+	</target>
+	-->

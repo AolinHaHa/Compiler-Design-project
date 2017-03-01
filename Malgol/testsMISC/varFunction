@@ -1,0 +1,7 @@
+main() : int
+{
+  i : int
+  j : int
+  i := j(3)
+  return 0
+}

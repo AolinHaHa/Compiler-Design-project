@@ -1,0 +1,18 @@
+package malgol.ast;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import malgol.type.Type;
+
+public class FunctionDefinition {
+	private final Type returnType;
+	private final String name;
+	private final LinkedList<Declaration> parameters;
+	private final BlockStatement body;
+	
+	public List<Statement> getreturnType() {
+		return returnTpye;
+	}
+	
+}

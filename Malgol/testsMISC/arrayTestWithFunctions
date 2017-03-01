@@ -1,0 +1,65 @@
+fill(A : arrayof 20 arrayof 10 int) : bool
+{
+  row : int
+  col : int
+  row := 0
+  col := 0
+  while (row < 20) do
+  {
+    col := 0
+    while (col < 10) do
+    {
+        A[row][col] := row * 10 + col
+        col := col + 1
+    }
+    row := row + 1
+   }
+   return true
+}
+
+triangle(n : int) : int
+{
+    if (n = 0)
+        then return 0
+        else return (n + triangle(n-1))
+}
+
+
+max(a:int, b:int) : int
+{
+  if (a > b)
+    then return a
+    else return b
+}
+
+printArray(C:arrayof 20 arrayof 10 int) : bool
+{
+  row : int
+  col : int
+  row := 0
+  col := 0
+  while (row < 20) do
+  {
+    col := 0
+    while (col < 10) do
+    {
+        print C[row][col]
+        col := col + 1
+    }
+    row := row + 1
+   }
+   return false
+}
+
+main() : int
+{
+    B : arrayof 20 arrayof 10 int
+    b : bool
+    b := fill(B)
+    if (b) then print 1 else print 0
+    b := printArray(B)
+    if (b) then print 1 else print 0
+    print(max(triangle(B[0][9]), B[10][1]))
+    print B[B[1][5]][B[0][7]]
+    return 0
+}

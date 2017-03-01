@@ -1,0 +1,11 @@
+f() : int
+{
+  return 5
+}
+
+main() : int
+{
+  i : int
+  i := f
+  return 0
+}

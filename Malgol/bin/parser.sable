@@ -1,0 +1,205 @@
+Package malgol;
+
+Helpers
+
+    digit = ['0' .. '9'];
+    letter = ['A' .. 'Z'] | ['a' .. 'z'];
+    tab = 9;
+    cr = 13;
+    lf = 10;
+    eol = cr lf | cr | lf; // This takes care of different platforms
+
+    blank = (' ' | tab | eol)+;
+
+Tokens
+    l_par = '(';
+    r_par = ')';
+    l_brace = '{';
+    r_brace = '}';
+    l_bracket = '[';
+    r_bracket = ']';
+    plus = '+';
+    minus = '-';
+    mult = '*';
+    div = '/';
+    mod = '%';
+    comma = ',';
+    lt = '<';
+    gt = '>';
+    geq = '>=';
+    leq = '<=';
+    eq = '=';
+    neq = '!=';
+    amp = '&';
+    bar = '|';
+    bang = '!';
+    colon_equals = ':=';
+    int = 'int';
+    bool = 'bool';
+    array_of = 'arrayof';
+    colon = ':';
+    print = 'print';
+    if = 'if';
+    then = 'then';
+    else = 'else';
+    while = 'while';
+    do = 'do';
+    skip = 'skip';
+    return = 'return';
+    boolean = 'true' | 'false';
+
+    blank = blank;
+    number = digit+;
+    id = letter (letter|digit)*;
+
+
+Ignored Tokens
+    blank;
+
+
+Productions
+
+	program
+		= function_def function_def_list
+		;
+		
+	function_def_list
+		= {some} function_def function_def_list
+		| {none}
+		;
+		
+	function_def
+		= id l_par param_list r_par colon type block
+		;
+		
+	param_list
+		= {some} decl param_list_tail
+		| {none}
+		;
+		
+	param_list_tail
+		= {some} comma decl param_list_tail
+		| {none}
+		;
+		
+	block
+		= {block} l_brace decls_stmts r_brace
+		;
+				
+	stmt
+		= {print} print exp
+		| {assign} [l]:var_exp colon_equals [r]:exp
+		| {block} l_brace decls_stmts r_brace
+		| {select} if [cond]:exp then [t_branch]:stmt else [f_branch]:stmt
+		| {while} while [cond]:exp do [body]:stmt
+		| {skip} skip
+		| {return} return exp
+		;
+		
+	decls_stmts
+		= {some_decls} decl decls_stmts
+		| {no_decls} stmt_list
+		;
+		
+	decl
+		= id colon type
+		;
+		
+	stmt_list
+		= {some} stmt stmt_list
+		| {none}
+		;
+		
+	type
+		= {int} int
+		| {bool} bool
+		| {array} array_of [size]:number [elements]:type
+		;
+		
+	exp
+		= {or} [left]:exp bar [right]:and_exp
+		| {base} [arg]:and_exp
+		;
+		
+	and_exp
+		= {and} [left]:and_exp amp [right]:not_exp
+		| {base} [arg]:not_exp
+		; 
+		
+	not_exp
+		= {not} bang [arg]:not_exp
+		| {base} [arg]:rel_exp
+		;
+	
+	rel_exp
+ 		= {lt} [left]:int_exp lt [right]:int_exp
+		| {gt} [left]:int_exp gt [right]:int_exp
+		| {eq} [left]:int_exp eq [right]:int_exp
+		| {neq} [left]:int_exp neq [right]:int_exp
+		| {geq} [left]:int_exp geq [right]:int_exp
+		| {leq} [left]:int_exp leq [right]:int_exp
+		| {int_exp} [arg]:int_exp
+		;
+		
+		
+    int_exp
+		= {plus}	[left]:int_exp plus [right]:term
+        | {minus}	[left]:int_exp minus [right]:term
+        | {term}	[arg]:term
+		;
+
+    term
+		= {mult}	[left]:term mult [right]:factor
+        | {div}		[left]:term div [right]:factor
+        | {mod}     [left]:term mod [right]:factor
+        | {factor}	[arg]:factor
+		;
+		
+	factor
+		= {int_neg} minus [arg]:factor
+		| {prime_exp} [arg]:prime_exp
+		;
+
+    prime_exp
+    	= {int}		number
+    	| {bool}	boolean
+    	| {var}		var_exp
+    	| {function_call} id l_par arg_list r_par
+        | {paren}	l_par exp r_par
+		;
+		
+	var_exp
+		= {id} id
+		| {array} [array]:var_exp l_bracket [index]:exp r_bracket
+		;
+
+	arg_list
+		= {some} exp arg_list_tail
+		| {none}
+		;
+		
+	arg_list_tail
+		= {some} comma exp arg_list_tail
+		| {none}
+		;
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

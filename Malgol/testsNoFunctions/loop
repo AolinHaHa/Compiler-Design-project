@@ -1,0 +1,11 @@
+{
+  i : int
+  i := 0
+  while i < 10 do
+  {
+    if (i % 2 = 0)
+      then {print 0 print i print 0}
+      else print 2*i
+    i := i + 1
+  }
+}

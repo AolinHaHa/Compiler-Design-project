@@ -1,0 +1,83 @@
+max(a:int, b:int) : int
+{
+  if (a > b)
+    then return a
+    else return b
+}
+
+arrayMax(C:arrayof 20 int) : int
+{
+  i : int
+  currentMax : int
+  i := 1
+  currentMax := C[0]
+  while (i < 20) do
+  {
+    currentMax := max(currentMax, C[i])
+    i := i + 1
+  }
+  return currentMax
+}
+
+array2DMax(C:arrayof 20 arrayof 10 int) : int
+{
+  row : int
+  col : int
+  currentMax : int
+  row := 0
+  col := 0
+  currentMax := C[0][0]
+  while(row < 20) do
+  {
+    col := 0
+    while (col < 10) do
+    {
+      currentMax := max(currentMax, C[row][col])
+      col := col + 1
+    }
+    row := row + 1
+  }
+  return currentMax
+}
+
+fill2D(C:arrayof 20 arrayof 10 int) : int
+{
+  row : int
+  col : int
+  row := 0
+  col := 0
+  while(row < 20) do
+  {
+    col := 0
+    while (col < 10) do
+    {
+      C[row][col] := row * 1000 + col
+      col := col + 1
+    }
+    row := row + 1
+  }
+  return 0
+}
+
+    
+
+
+main() : int
+{
+    B : arrayof 20 int
+    A : arrayof 20 arrayof 10 int
+    i : int
+    i := 0
+    while (i < 20) do
+    {
+        if (i % 2 = 0)
+            then B[i] := -i
+            else B[i] := i
+        i := i+1
+    }
+    print arrayMax(B)
+    i := fill2D(A)
+    A[17][7] := 9999999
+    print array2DMax(A)
+    return 0
+}
